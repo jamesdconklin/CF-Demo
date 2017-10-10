@@ -1,5 +1,5 @@
 import { applyMiddleware } from 'redux';
-import TaskMiddleware from 'Middlewares/task_middleware';
+import TaskMiddleware from 'Middlewares/TaskMiddleware';
 
 export default applyMiddleware(
   TaskMiddleware

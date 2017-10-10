@@ -1,0 +1,57 @@
+.task {
+  background-color: #fdfdfd;
+  box-shadow: 0 2px 1.5px 0 rgba(68,68,68,0.3);
+  min-height: 150px;
+  border: 1px solid #eaeaea;
+  border-radius: 3px;
+
+  margin: 10px;
+  padding: 15px 15px 15px 10px;
+
+  justify-content: space-between;
+}
+
+.taskLabel {
+  display: inline-block;
+  color: #848484;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  height: 20px;
+  box-sizing: border-box;
+}
+
+.taskLabelEditing {
+  color: black;
+}
+
+/*
+  Note to self: prefixing a class with "dot" will lead
+  to omitting the prefix with regularity.
+*/
+.dotContainer {
+  margin-right: 15px;
+}
+
+.dots {
+  margin: 0px 1px;
+  color: #848484;
+  display: inline-block;
+}
+
+.trash {
+  color: #848484;
+}
+
+.trash:hover {
+  color: #606060;
+  cursor: pointer;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}

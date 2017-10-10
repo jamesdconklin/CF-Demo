@@ -7,7 +7,7 @@ function getEndpoint(name) {
 
 export function getTasks(name) {
   const uri = getEndpoint(name);
-  const options = { uri };
+  const options = { uri, json: true };
 
   return rp(options);
 }

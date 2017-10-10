@@ -2,8 +2,14 @@ export const FETCH_TASKS = "FETCH_TASKS";
 export const SET_TASKS = "SET_TASKS";
 export const POST_TASKS = "POST_TASKS";
 export const REQUEST_TASKS = "REQUEST_TASKS";
+export const DELETE_TASK = "DELETE_TASK";
 
-export const receiveTasks = (tasks) => ({
+export const deleteTask = (index) => ({
+  type: DELETE_TASK,
+  index
+});
+
+export const receiveTasks = ({tasks}) => ({
   type: FETCH_TASKS,
   tasks,
 });
@@ -18,7 +24,6 @@ export const postTasks = (tasks) => ({
   tasks,
 });
 
-export const requestTasks = (tasks) => ({
+export const requestTasks = () => ({
   type: REQUEST_TASKS,
-  tasks,
 });
