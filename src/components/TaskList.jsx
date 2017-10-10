@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 
 import Task from 'Components/Task';
-import AlertContainer from 'Components/AlertContainer';
 
 export default class TaskList extends PureComponent {
   constructor(props) {
@@ -40,7 +39,6 @@ export default class TaskList extends PureComponent {
             ))
           }
         </ul>
-        <AlertContainer/>
       </div>
     );
   }

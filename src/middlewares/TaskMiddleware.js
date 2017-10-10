@@ -5,6 +5,8 @@ import {
   requestTasks
 } from 'Actions/TaskActions';
 
+import { newAlert } from 'Actions/AlertActions';
+
 import config from 'Config';
 
 import { getTasks, postTasks } from 'Utils/requests';
@@ -16,12 +18,17 @@ export default ({ dispatch }) => next => action => {
     case REQUEST_TASKS:
       getTasks(username).then(
         (tasks) => dispatch(receiveTasks(tasks))
-      ).catch(console.log);
+      ).catch(err => {
+        dispatch(newAlert("Could not retrieve tasks from server. Retrying."));
+        setTimeout(() => dispatch(requestTasks()), 2000);
+      });
       break;
     case POST_TASKS:
       postTasks(username, action.tasks).then(
-        (tasks => dispatch(receiveTasks(tasks)))
-      ).catch(console.log);
+        tasks => dispatch(receiveTasks(tasks))
+      ).catch(err => dispatch(
+        newAlert("Could not post tasks to server. Please try again.")
+      ));
       break;
   }
   return next(action);

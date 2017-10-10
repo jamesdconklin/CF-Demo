@@ -1,13 +1,13 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 
-import TaskListContainer from 'Components/TaskListContainer';
+import App from 'Components/App';
 
 const Root = ({ store }) => {
 
   return (
     <Provider store={store}>
-      <TaskListContainer/>
+      <App/>
     </Provider>
   );
 };

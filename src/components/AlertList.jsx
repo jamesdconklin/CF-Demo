@@ -2,6 +2,6 @@ import React, { PureComponent } from 'react';
 
 export default ({alerts}) => (
   <ul>
-    {alerts.map(alert => (<div>{alert.msg}</div>))}
+    {alerts.map(({id, msg}) => (<div key={id}>{msg}</div>))}
   </ul>
 );
