@@ -1,0 +1,43 @@
+.taskListHeader {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.titleContainer {
+  flex-direction: column;
+  justify-content: center;
+  display: flex;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 900;
+  color: #24313a;
+}
+
+.addButton, .saveButton {
+  margin: 5px;
+  border-radius: 3px;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.addButton {
+  background-color: #3434ae;
+  border: none;
+}
+
+.saveButton {
+  background-color: #34ae34;
+  border: none;
+}
+
+.disabled {
+  background-color: #656565;
+  color: #aeaeae;
+  cursor: not-allowed;
+}

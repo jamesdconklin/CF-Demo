@@ -11,7 +11,6 @@ import config from 'Config';
 
 import { getTasks, postTasks } from 'Utils/requests';
 
-// TODO: Error handling. Will need alert middleware and reducer.
 export default ({ dispatch }) => next => action => {
   const { username } = config;
   switch (action.type) {

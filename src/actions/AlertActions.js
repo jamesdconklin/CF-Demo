@@ -6,7 +6,7 @@ export const newAlert = (msg) => ({
   msg
 });
 
-export const removeAalert = (index) => ({
+export const removeAlert = (index) => ({
   type: REMOVE_ALERT,
   index
 });

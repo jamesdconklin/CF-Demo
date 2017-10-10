@@ -14,7 +14,6 @@ const mapStateToProps = ({ alerts }) => {
 
 const mapDispatchToProps = (dispatch) => ({
   removeAlert: (index) => dispatch(removeAlert(index)),
-  newAlert: (msg) => dispatch(newAlert(msg))
 });
 
 export default connect(

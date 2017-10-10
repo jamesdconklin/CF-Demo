@@ -1,0 +1,28 @@
+.alert {
+  margin: 10px;
+  border-radius: 4px;
+  padding: 10px 15px;
+  border: 1px solid #b1d2b1;
+  font-size: 14px;
+  color: #7cc37c;
+  background-color: #e0f3e0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.close {
+  cursor: pointer;
+}
+.close:hover {
+  filter: brightness(85%);
+}
+
+.msg {
+  margin: 0 10px 0 0;
+}
+
+.centerVert {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
