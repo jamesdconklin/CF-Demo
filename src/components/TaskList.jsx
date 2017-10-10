@@ -8,22 +8,35 @@ export default class TaskList extends PureComponent {
   }
 
   render() {
-    const { tasks, deleteTask } = this.props;
+    const {
+      tasks, deleteTask, renameTask,
+      newTask, persist, modified
+    } = this.props;
+
     return (
-      <ul>
-        {
-          tasks.map(({ id, name, isFocused }, index) => (
-            <Task
-              key={id}
-              id={id}
-              name={name}
-              index={index}
-              isFocused={isFocused}
-              deleteTask={deleteTask}
-            />
-          ))
-        }
-      </ul>
+      <div>
+        <button onClick={newTask}>
+          NEW TASK, Y'ALL
+        </button>
+        <button disabled={!modified} onClick={(e) => persist(tasks)}>
+          POST THOSE TASKS!
+        </button>
+        <ul>
+          {
+            tasks.map(({ id, name, isFocused }, index) => (
+              <Task
+                key={id}
+                id={id}
+                name={name}
+                index={index}
+                isFocused={isFocused}
+                deleteTask={deleteTask}
+                renameTask={renameTask}
+                />
+            ))
+          }
+        </ul>
+      </div>
     );
   }
 }

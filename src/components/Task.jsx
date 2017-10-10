@@ -13,20 +13,31 @@ export default class Task extends PureComponent {
     };
     this.onChange = this.onChange.bind(this);
     this.onNewTask = this.onNewTask.bind(this);
-    this.onStopEditing = this.onStopEditing.bind(this);
     this.getDeleteFn = this.getDeleteFn.bind(this);
   }
 
-  onStopEditing() {
-    this.setState({ isFocused: false });
+  // I'd prefer to keep the changes confined to component state until we stop
+  // editing, but the afterFinish prop for the RIEK input fires before the state
+  // change. This'll have to suffice for demo purposes.
+  onChange({ name }) {
+    const { renameTask, index } = this.props;
+    renameTask(index, name);
   }
 
-  onChange({ name }) {
-    this.setState({ name });
+  componentWillReceiveProps({ name }) {
+    if (name !== this.state.name) {
+      this.setState({ name });
+    }
   }
 
   onNewTask(ref) {
-    ref.startEditing();
+     this.ref = ref;
+  }
+
+  componentDidMount() {
+    if (this.props.isFocused) {
+      this.ref.startEditing();
+    }
   }
 
   getDeleteFn(idx) {
@@ -36,8 +47,8 @@ export default class Task extends PureComponent {
   }
 
   render() {
-    const { name, isFocused } = this.state;
-    const { index } = this.props;
+    const { name } = this.state;
+    const { index, isFocused } = this.props;
     return (
       <div className={styles.task}>
         <div className={styles.left}>
@@ -47,7 +58,7 @@ export default class Task extends PureComponent {
             <FontAwesome name="ellipsis-v"  size="lg" className={styles.dots}/>
           </span>
           <RIEInput
-            ref={this.props.isFocused ? this.onNewTask : null}
+            ref={this.onNewTask}
             className={styles.taskLabel}
             classEditing={null}
             value={name}

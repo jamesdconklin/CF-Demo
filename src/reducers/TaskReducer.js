@@ -1,7 +1,10 @@
+import uuidv1 from 'uuid/v1';
+
 import {
   DELETE_TASK,
-  SET_TASKS,
-  FETCH_TASKS,
+  RECEIVE_TASKS,
+  RENAME_TASK,
+  NEW_TASK
 } from 'Actions/TaskActions';
 
 import compareTasks from 'Utils/compare';
@@ -14,16 +17,11 @@ const DEFAULT_STATE = {
 export default (state = DEFAULT_STATE, action) => {
   Object.freeze(state);
 
-  const { tasks, index } = action;
+  const { tasks, index, name } = action;
 
+  //TODO Use React Immutability Helper for the state transitions.
   switch (action.type) {
-    case SET_TASKS:
-      const modified = !compareTasks(state.tasks, tasks);
-      return ({
-        tasks,
-        modified
-      });
-    case FETCH_TASKS:
+    case RECEIVE_TASKS:
       return ({
         tasks: tasks || [],
         modified: false
@@ -35,6 +33,26 @@ export default (state = DEFAULT_STATE, action) => {
       return ({
         tasks: newTasks,
         modified: true
+      });
+    case RENAME_TASK:
+      const renamedTask = Object.assign({}, state.tasks[index], { name });
+      const renamedTasks = state.tasks.slice(0, index).concat(
+        renamedTask
+      ).concat(
+        state.tasks.slice(index+1)
+      );
+      return ({
+        modified: true,
+        tasks: renamedTasks
+      });
+    case NEW_TASK:
+      return ({
+        modified: true,
+        tasks: state.tasks.concat(
+          {
+            id: uuidv1(), isFocused: true, name: "NEW TASK"
+          }
+        )
       });
     default:
       return Object.assign({}, state);

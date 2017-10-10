@@ -1,7 +1,13 @@
 import { connect } from 'react-redux';
 import React from 'react';
 
-import { deleteTask } from 'Actions/TaskActions';
+import {
+  deleteTask,
+  renameTask,
+  postTasks,
+  newTask
+} from 'Actions/TaskActions';
+
 import TaskList from 'Components/TaskList';
 
 const mapStateToProps = ({ taskList }) => {
@@ -11,8 +17,10 @@ const mapStateToProps = ({ taskList }) => {
 
 const mapDispatchToProps = (dispatch) => ({
   deleteTask: (index) => dispatch(deleteTask(index)),
-  renameTask: () => console.log('rename'),
-  moveTask: () => console.log('move')
+  renameTask: (index, name) => dispatch(renameTask(index, name)),
+  moveTask: () => console.log('move'),
+  persist: (tasks) => dispatch(postTasks(tasks)),
+  newTask: () => dispatch(newTask())
 });
 
 export default connect(
