@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 
 import Task from 'Components/Task';
+import AlertContainer from 'Components/AlertContainer';
 
 export default class TaskList extends PureComponent {
   constructor(props) {
@@ -15,12 +16,15 @@ export default class TaskList extends PureComponent {
 
     return (
       <div>
-        <button onClick={newTask}>
-          NEW TASK, Y'ALL
-        </button>
-        <button disabled={!modified} onClick={(e) => persist(tasks)}>
-          POST THOSE TASKS!
-        </button>
+        <span>Tasks</span>
+        <span>
+          <button onClick={newTask}>
+            NEW TASK, Y'ALL
+          </button>
+          <button disabled={!modified} onClick={(e) => persist(tasks)}>
+            POST THOSE TASKS!
+          </button>
+        </span>
         <ul>
           {
             tasks.map(({ id, name, isFocused }, index) => (
@@ -36,6 +40,7 @@ export default class TaskList extends PureComponent {
             ))
           }
         </ul>
+        <AlertContainer/>
       </div>
     );
   }
