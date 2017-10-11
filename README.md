@@ -27,6 +27,8 @@ Run webpack.
 
 `$ npm run build`
 
+The javascript compiles to `dist/bundle.js`. Opening `dist/index.html` in a browser should suffice for interacting with the demo.
+
 ## Disclosures
 
 This project was put together as a demonstration of skill for a job application. I am responsible only for the front-end code.
