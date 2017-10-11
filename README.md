@@ -1,10 +1,6 @@
 # CF-Demo
 Simple Task list, demonstrating React, Drag-and-drop, and async error handling.
 
-## Live Demo
-
-Coming soon.
-
 ## Features
  - List of Tasks
  - New tasks can be created and existing tasks persisted by the top-most buttons
