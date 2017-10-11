@@ -1,10 +1,20 @@
-
 import rp from 'request-promise';
 
-// Commented code is a dummy store for whenever I can't access the
-// API.
+import config from 'Config';
 
-// const store = { tasks: [{id: 1, name: "foo"}] }
+const { dummyApi } = config;
+
+const store = {};
+
+if (dummyApi) {
+  store.tasks = {
+    tasks: [
+      { id: 'halifax', name: "Prima" },
+      { id: 'quebec', name: "Deuxieme" },
+      { id: 'winnipeg', name: "Tercero" },
+    ],
+  };
+}
 
 function getEndpoint(name) {
   return `http://cfassignment.herokuapp.com/${name}/tasks`;
@@ -16,15 +26,22 @@ function fieldFilter({ name, id }) {
 }
 
 export function getTasks(name) {
+  if (dummyApi) return new Promise((resolve) => resolve(store.tasks));
+
   const uri = getEndpoint(name);
   const options = { uri, json: true };
 
   return rp(options);
-  // const p = new Promise((resolve) => {console.log('fetch resolve'); resolve(store); });
-  // return p;
 }
 
 export function postTasks(name, tasks) {
+  if (dummyApi) {
+    return new Promise((resolve) => {
+      store.tasks = tasks;
+      return resolve(store);
+    });
+  }
+
   const uri = getEndpoint(name);
   const options = {
     uri,
@@ -33,7 +50,5 @@ export function postTasks(name, tasks) {
     json: true
   };
 
-  // const p = new Promise((resolve) => {store.tasks = tasks; resolve(store);});
-  // return p;
   return rp(options);
 }
