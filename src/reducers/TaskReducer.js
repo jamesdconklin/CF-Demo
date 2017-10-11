@@ -1,10 +1,12 @@
 import uuidv1 from 'uuid/v1';
+import update from 'immutability-helper';
 
 import {
   DELETE_TASK,
   RECEIVE_TASKS,
   RENAME_TASK,
-  NEW_TASK
+  NEW_TASK,
+  MOVE_TASK,
 } from 'Actions/TaskActions';
 
 import compareTasks from 'Utils/compare';
@@ -17,14 +19,14 @@ const DEFAULT_STATE = {
 export default (state = DEFAULT_STATE, action) => {
   Object.freeze(state);
 
-  const { tasks, index, name } = action;
+  const { tasks, index, name, fromIndex, toIndex, modified } = action;
 
   //TODO Use React Immutability Helper for the state transitions.
   switch (action.type) {
     case RECEIVE_TASKS:
       return ({
         tasks: tasks || [],
-        modified: false
+        modified
       });
     case DELETE_TASK:
       const newTasks = state.tasks.slice(0, index).concat(
@@ -54,6 +56,7 @@ export default (state = DEFAULT_STATE, action) => {
           }
         )
       });
+
     default:
       return Object.assign({}, state);
   }

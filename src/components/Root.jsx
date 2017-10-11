@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { Provider } from 'react-redux';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 import App from 'Components/App';
 
-const Root = ({ store }) => {
+class Root extends PureComponent {
+  render() {
+    const { store } = this.props;
+    return (
+      <Provider store={store}>
+        <App/>
+      </Provider>
+    );
+  }
+}
 
-  return (
-    <Provider store={store}>
-      <App/>
-    </Provider>
-  );
-};
-
-export default Root;
+export default DragDropContext(HTML5Backend)(Root);

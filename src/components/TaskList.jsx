@@ -1,19 +1,64 @@
 import React, { PureComponent } from 'react';
+import { DropTarget } from 'react-dnd';
+import update from 'immutability-helper';
 
 import Task from 'Components/Task';
+import { ItemTypes } from 'Utils/constants';
 
 import styles from 'CSS/TaskList';
 
-export default class TaskList extends PureComponent {
+const cardTarget = {
+	drop() {},
+};
+
+class TaskList extends PureComponent {
   constructor(props) {
     super(props);
+		this.state = {
+			tasks: props.tasks
+		};
+
+		this.findTask = this.findTask.bind(this);
+		this.moveTask = this.moveTask.bind(this);
+		this.commitMove = this.commitMove.bind(this);
   }
+
+	componentWillReceiveProps({tasks}) {
+		this.setState({
+			tasks
+		});
+	}
+
+	commitMove() {
+		const { tasks } = this.state;
+		this.props.receiveTasks({ tasks, modified: true });
+	}
+
+	findTask(id) {
+		const index = this.state.tasks.findIndex(task => id === task.id);
+		return { task: this.state.tasks[index], index };
+	}
+
+	moveTask(id, toIndex) {
+		const { task, index } = this.findTask(id);
+
+		this.setState(
+			update(this.state, {
+				tasks: {
+					$splice: [[index, 1], [toIndex, 0, task]],
+				},
+			})
+		);
+	}
+
 
   render() {
     const {
-      tasks, deleteTask, renameTask,
-      newTask, persist, modified
+      deleteTask, renameTask, connectDropTarget,
+      newTask, persist, modified, moveTask,
     } = this.props;
+
+		const { tasks } = this.state;
 
     return (
       <div>
@@ -34,22 +79,33 @@ export default class TaskList extends PureComponent {
             </button>
           </span>
         </div>
-        <ul>
-          {
-            tasks.map(({ id, name, isFocused }, index) => (
-              <Task
-                key={id}
-                id={id}
-                name={name}
-                index={index}
-                isFocused={isFocused}
-                deleteTask={deleteTask}
-                renameTask={renameTask}
-                />
-            ))
-          }
-        </ul>
+        { connectDropTarget(
+					<ul>
+	          {
+	            tasks.map(({ id, name, isFocused }, index) => (
+	              <Task
+	                key={id}
+	                id={id}
+	                name={name}
+	                index={index}
+	                isFocused={isFocused}
+	                deleteTask={deleteTask}
+	                renameTask={renameTask}
+									moveTask={this.moveTask}
+									findTask={this.findTask}
+									commitMove={this.commitMove}
+	                />
+	            ))
+	          }
+	        </ul>
+				) }
       </div>
     );
   }
 }
+
+export default DropTarget(
+	ItemTypes.TASK, cardTarget, connect => ({
+    connectDropTarget: connect.dropTarget(),
+  })
+)(TaskList);

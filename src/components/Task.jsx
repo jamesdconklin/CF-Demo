@@ -1,10 +1,47 @@
 import React, { PureComponent } from 'react';
+import { DragSource, DropTarget } from 'react-dnd';
 import { RIEInput } from 'riek';
 import FontAwesome from 'react-fontawesome';
 
+import { ItemTypes } from 'Utils/constants';
 import styles from 'CSS/Task.css';
 
-export default class Task extends PureComponent {
+const taskSource = {
+  beginDrag(props) {
+    const { id, findTask } = props;
+    return {
+      id,
+      draggedIndex: findTask(id).index,
+    };
+  },
+
+  endDrag(props, monitor) {
+      const { id: droppedId, draggedIndex } = monitor.getItem();
+      const didDrop = monitor.didDrop();
+
+      if (!didDrop) {
+        //cancel if dropped outside legal area.
+        props.moveTask(droppedId, draggedIndex);
+      } else {
+        props.commitMove();
+      }
+  },
+};
+
+const taskTarget = {
+  canDrop: () => false,
+
+  hover(props, monitor) {
+    const { id: draggedId } = monitor.getItem();
+    const { id: overId, index : overIndex } = props;
+
+    if (draggedId !== overId) {
+      props.moveTask(draggedId, overIndex);
+    }
+  }
+};
+
+class Task extends PureComponent {
   constructor(props) {
     super(props);
     const { name, isFocused } = props;
@@ -48,9 +85,11 @@ export default class Task extends PureComponent {
 
   render() {
     const { name } = this.state;
-    const { index, isFocused } = this.props;
-    return (
-      <div className={styles.task}>
+    const {
+      index, isFocused, isDragging, connectDragSource, connectDropTarget,
+       } = this.props;
+    const task = (
+      <div style={{opacity: isDragging? 0 : 1}} className={styles.task}>
         <div className={styles.left}>
           <span className={styles.dotContainer}>
             <FontAwesome name="ellipsis-v"  size="lg" className={styles.dots}/>
@@ -77,5 +116,23 @@ export default class Task extends PureComponent {
         </div>
       </div>
     );
+    return connectDragSource(connectDropTarget(task));
   }
 }
+
+export default DropTarget(
+  ItemTypes.TASK,
+  taskTarget,
+  connect => ({
+	   connectDropTarget: connect.dropTarget(),
+  })
+)(
+  DragSource(
+    ItemTypes.TASK,
+    taskSource,
+    (connect, monitor) => ({
+      connectDragSource: connect.dragSource(),
+      isDragging: monitor.isDragging(),
+    })
+  )(Task)
+);
