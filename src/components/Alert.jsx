@@ -6,22 +6,22 @@ import styles from 'CSS/Alert';
 
 export default function Alert({ msg, removeAlert }) {
   return (
-    <div>
-      <div className={styles.alert}>
-        <div className={styles.centerVert}>
+    <div className={styles.shiftRight}>
+      <span className={styles.alert}>
+        <span className={styles.centerVert}>
           <span className={styles.msg}>
             {msg}
           </span>
-        </div>
-        <div className={styles.centerVert}>
+        </span>
+        <span className={styles.centerVert}>
           <FontAwesome
             name="close"
             size="lg"
             onClick={removeAlert}
             className={styles.close}
           />
-        </div>
-      </div>
+        </span>
+      </span>
     </div>
   );
 }

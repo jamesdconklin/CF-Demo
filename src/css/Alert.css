@@ -1,5 +1,4 @@
 .alert {
-  margin: 10px;
   border-radius: 4px;
   padding: 10px 15px;
   border: 1px solid #b1d2b1;
@@ -25,4 +24,10 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+}
+
+.shiftRight {
+  margin: 10px;
+  display: flex;
+  justify-content: flex-end;
 }

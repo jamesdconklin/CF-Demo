@@ -23,7 +23,9 @@ const mapDispatchToProps = (dispatch) => ({
   moveTask: (fromIndex, toIndex) => dispatch(moveTask(fromIndex, toIndex)),
   persist: (tasks) => dispatch(postTasks(tasks)),
   newTask: () => dispatch(newTask()),
-  receiveTasks: ({ modified, tasks }) => dispatch(receiveTasks({ tasks, modified }))
+  receiveTasks: ({ modified, tasks }) => dispatch(
+    receiveTasks({ tasks, modified })
+  )
 });
 
 export default connect(
