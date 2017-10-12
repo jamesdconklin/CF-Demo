@@ -1,3 +1,5 @@
+/*eslint-disable no-undef*/
+
 import rp from 'request-promise';
 
 import config from 'Config';

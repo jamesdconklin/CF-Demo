@@ -11,7 +11,7 @@ import {
 
 import compareTasks from 'Utils/compare';
 
-const DEFAULT_STATE = {
+export const DEFAULT_STATE = {
   tasks: [],
   modified: false
 };
@@ -37,7 +37,11 @@ export default (state = DEFAULT_STATE, action) => {
         modified: true
       });
     case RENAME_TASK:
-      const renamedTask = Object.assign({}, state.tasks[index], { name });
+
+      let renamedTask = state.tasks[index];
+      if (!renamedTask) return state;
+      renamedTask = Object.assign({}, state.tasks[index], { name });
+
       const renamedTasks = state.tasks.slice(0, index).concat(
         renamedTask
       ).concat(
