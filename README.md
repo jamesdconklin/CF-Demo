@@ -19,6 +19,10 @@ Install dependencies:
 
 `$ npm i`
 
+I'd say "run the tests," but so far I'm only covering the TaskReducer.
+
+`$ npm run test`
+
 Run webpack.
 
 `$ npm run build`
