@@ -26,7 +26,7 @@ export default (state = DEFAULT_STATE, action) => {
     case RECEIVE_TASKS:
       return ({
         tasks: tasks || [],
-        modified
+        modified: Boolean(modified),
       });
     case DELETE_TASK:
       const newTasks = state.tasks.slice(0, index).concat(
@@ -56,7 +56,9 @@ export default (state = DEFAULT_STATE, action) => {
         modified: true,
         tasks: state.tasks.concat(
           {
-            id: uuidv1(), isFocused: true, name: "NEW TASK"
+            id: uuidv1(),
+            isFocused: name !== undefined,
+            name: name === undefined ? "NEW TASK" : name
           }
         )
       });
